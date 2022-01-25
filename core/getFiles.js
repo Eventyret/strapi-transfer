@@ -5,7 +5,7 @@ const alert = require('cli-alerts');
 
 const listEndpoints = async dirPath => {
 	// dir path that contains all your json file
-	const spinner = ora('Getting endpoiints').info();
+	const spinner = ora('Getting endpoints from project').info();
 	const files = fs.readdirSync(dirPath);
 	const arr = [];
 	const failedColl = [];

@@ -13,4 +13,4 @@ const checkAPI = async () => {
 	await testPermissions(collections);
 };
 
-checkAPI();
+module.exports = { checkAPI };

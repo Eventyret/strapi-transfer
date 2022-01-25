@@ -3,7 +3,7 @@ const ora = require('ora');
 const { createFiles, getStoreAll } = require('./store.js');
 const { reportApi } = require('./report.js');
 
-const testPermissions = async collections => {
+const testPermissions = async (collections, retry = false) => {
 	const store = {
 		accessGranted: [],
 		notFound: [],
@@ -36,6 +36,6 @@ const testPermissions = async collections => {
 			}
 		}
 	}
-	createFiles(store);
+	if (!retry) createFiles(store);
 };
 module.exports = { testPermissions };

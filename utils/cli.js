@@ -19,6 +19,12 @@ const flags = {
 		alias: `d`,
 		desc: `Print debug info`
 	},
+	retry: {
+		type: `boolean`,
+		default: false,
+		alias: `r`,
+		desc: `Retry no Permissions`
+	},
 	version: {
 		type: `boolean`,
 		alias: `v`,
@@ -27,7 +33,8 @@ const flags = {
 };
 
 const commands = {
-	help: { desc: `Print help info` }
+	help: { desc: `Print help info` },
+	retry: { desc: `Retry no Permissions` }
 };
 
 const helpText = meowHelp({
