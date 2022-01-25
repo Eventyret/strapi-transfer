@@ -22,7 +22,7 @@ const checkAPI = async () => {
 	for await (const col of collections) {
 		const spinner = ora(`Trying ${col}`).start();
 		try {
-			const res = await axios.get(`http://localhost:1337/${col}`);
+			await axios.get(`http://localhost:1337/${col}`);
 			store.accessGranted.push(col);
 			spinner.succeed(`Access Granted for ${col}`);
 			reportApi(col, 200);
