@@ -8,8 +8,10 @@ const createFiles = async collection => {
 const getStore = async key => {
 	return config.get(key);
 };
-const getStoreAll = async () => {
-	const store = config.all;
-	return store;
+const updateStore = async (key, store) => {
+	return config.set(key, store);
 };
-module.exports = { createFiles, getStore, getStoreAll };
+const getStoreAll = async () => {
+	return config.all;
+};
+module.exports = { createFiles, getStore, getStoreAll, updateStore };

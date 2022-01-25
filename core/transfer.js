@@ -1,6 +1,7 @@
 const { testPermissions } = require('./permissions');
 const { listEndpoints } = require('./getFiles');
 const alert = require('cli-alerts');
+const { createFiles } = require('./store');
 
 const checkAPI = async () => {
 	const collections = await listEndpoints(
@@ -10,7 +11,8 @@ const checkAPI = async () => {
 		type: `info`,
 		msg: `Testing Permissions`
 	});
-	await testPermissions(collections);
+	const createdCollections = testPermissions(collections);
+	createFiles(createdCollections);
 };
 
 module.exports = { checkAPI };

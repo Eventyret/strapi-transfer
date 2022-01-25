@@ -1,11 +1,9 @@
 const { testPermissions } = require('./permissions');
-const { getStore } = require('./store');
+const { getStore, getStoreAll, updateStore } = require('./store');
 
-const retryAPI = async collections => {
-	const retryCollections = collections
-		? collections
-		: getStore('noPermissions');
-	await testPermissions(retryCollections);
+const retryAPI = async (key, collections) => {
+	const retryComplete = await testPermissions(collections);
+	updateStore(key, retryComplete);
 };
 
 module.exports = { retryAPI };

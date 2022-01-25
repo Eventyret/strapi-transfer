@@ -1,14 +1,19 @@
 const axios = require('axios');
 const ora = require('ora');
-const { createFiles, getStoreAll } = require('./store.js');
+const { createFiles, getStoreAll, getStore } = require('./store.js');
 const { reportApi } = require('./report.js');
 
-const testPermissions = async (collections, retry = false) => {
-	const store = {
-		accessGranted: [],
-		notFound: [],
-		noPermissions: []
-	};
+const testPermissions = async collections => {
+	let store = await getStoreAll();
+	if (!store) {
+		store = {
+			accessGranted: [],
+			notFound: [],
+			noPermissions: []
+		};
+	}
+
+	console.log(store);
 	for await (const col of collections) {
 		const spinner = ora(`Trying ${col}`).start();
 		try {
@@ -36,6 +41,6 @@ const testPermissions = async (collections, retry = false) => {
 			}
 		}
 	}
-	if (!retry) createFiles(store);
+	return store;
 };
 module.exports = { testPermissions };
