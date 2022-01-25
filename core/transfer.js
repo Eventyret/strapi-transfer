@@ -1,7 +1,8 @@
 const axios = require('axios');
 const dree = require('dree');
-const { createTable, printTable } = require('../core/printTable');
+const { reportApi, printTable } = require('./report.js');
 const ora = require('ora');
+const { createFiles, getStore, getStoreAll } = require('./store.js');
 
 const collections = [];
 const options = {
@@ -18,36 +19,35 @@ const addCollections = async () => {
 		'/Users/d7892891/Development/Challenger/strapi-application/api',
 		options
 	);
-	children.forEach(tree => {
-		if (tree.name.endsWith('s')) collections.push();
-		collections.push(tree.name.endsWith('s') ? tree.name : tree.name + 's');
-	});
+	children.forEach(tree =>
+		collections.push(tree.name.endsWith('s') ? tree.name : tree.name + 's')
+	);
 	checkAPI();
 };
 
-addCollections();
-
 const checkAPI = async () => {
-	const accessGranted = [];
-	const notFound = [];
-	const noPermissions = [];
+	const store = {
+		accessGranted: [],
+		notFound: [],
+		noPermissions: []
+	};
 
 	for await (const col of collections) {
 		const spinner = ora(`Trying ${col}`).start();
 		try {
 			const res = await axios.get(`http://localhost:1337/${col}`);
-			accessGranted.push(col);
+			store.accessGranted.push(col);
 			spinner.succeed(`Access Granted for ${col}`);
 			reportApi(col, 200);
 		} catch (err) {
 			switch (err.response.status) {
 				case 403:
 					spinner.warn(`Permission Denied for ${col}`);
-					noPermissions.push(col);
+					store.noPermissions.push(col);
 					reportApi(col, err.response.status);
 					break;
 				case 404:
-					notFound.push(col);
+					store.notFound.push(col);
 					spinner.fail(`Did not find ${col}`);
 					reportApi(col, err.response.status);
 					break;
@@ -59,16 +59,11 @@ const checkAPI = async () => {
 			}
 		}
 	}
-	printTable();
+	createFiles(store);
+	getStore('noPermissions');
+	//printTable();
 };
+console.log(getStoreAll());
+//getStore('noPermissions');
 
-const reportApi = async (collection, statusCode) => {
-	createTable([collection, STATUS[statusCode]]);
-};
-
-const STATUS = {
-	200: '✅  Access Granted',
-	403: '⛔️ Permission Denied',
-	404: '❓ Not Found',
-	500: '❌ Unknown Error'
-};
+// addCollections();
