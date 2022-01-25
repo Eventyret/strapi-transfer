@@ -1,29 +1,9 @@
 const axios = require('axios');
-const dree = require('dree');
 const { reportApi, printTable } = require('./report.js');
 const ora = require('ora');
-const { createFiles, getStore, getStoreAll } = require('./store.js');
-
-const collections = [];
-const options = {
-	stat: false,
-	normalize: true,
-	followLinks: true,
-	size: true,
-	hash: true,
-	depth: 1
-};
-
-const addCollections = async () => {
-	const { children } = await dree.scanAsync(
-		'/Users/d7892891/Development/Challenger/strapi-application/api',
-		options
-	);
-	children.forEach(tree =>
-		collections.push(tree.name.endsWith('s') ? tree.name : tree.name + 's')
-	);
-	checkAPI();
-};
+const { createFiles } = require('./store.js');
+const { listEndpoints } = require('./getFiles');
+const alert = require('cli-alerts');
 
 const checkAPI = async () => {
 	const store = {
@@ -31,6 +11,13 @@ const checkAPI = async () => {
 		notFound: [],
 		noPermissions: []
 	};
+	const collections = await listEndpoints(
+		`/Users/d7892891/Development/Challenger/strapi-application/api`
+	);
+	alert({
+		type: `info`,
+		msg: `Testing Permissions`
+	});
 
 	for await (const col of collections) {
 		const spinner = ora(`Trying ${col}`).start();
@@ -60,10 +47,6 @@ const checkAPI = async () => {
 		}
 	}
 	createFiles(store);
-	getStore('noPermissions');
-	//printTable();
 };
-console.log(getStoreAll());
-//getStore('noPermissions');
 
-// addCollections();
+checkAPI();
