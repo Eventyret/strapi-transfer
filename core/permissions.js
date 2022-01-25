@@ -5,15 +5,6 @@ const { reportApi } = require('./report.js');
 
 const testPermissions = async collections => {
 	let store = await getStoreAll();
-	if (!store) {
-		store = {
-			accessGranted: [],
-			notFound: [],
-			noPermissions: []
-		};
-	}
-
-	console.log(store);
 	for await (const col of collections) {
 		const spinner = ora(`Trying ${col}`).start();
 		try {
@@ -41,6 +32,7 @@ const testPermissions = async collections => {
 			}
 		}
 	}
+	console.log(store);
 	return store;
 };
 module.exports = { testPermissions };

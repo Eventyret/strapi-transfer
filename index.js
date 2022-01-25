@@ -12,6 +12,7 @@ const cli = require('./utils/cli');
 const log = require('./utils/log');
 const ask = require('./utils/ask');
 const { checkAPI } = require('./core/transfer');
+const { getStoreAll } = require('./core/store');
 
 const input = cli.input;
 const flags = cli.flags;
@@ -24,4 +25,5 @@ const { clear, debug } = flags;
 	input.includes(`notfound`) && ask('notFound');
 	input.length === 0 && checkAPI();
 	debug && log(flags);
+	debug && log(await getStoreAll());
 })();

@@ -12,6 +12,7 @@ const checkAPI = async () => {
 		msg: `Testing Permissions`
 	});
 	const createdCollections = testPermissions(collections);
+	console.log(createdCollections);
 	createFiles(createdCollections);
 };
 
