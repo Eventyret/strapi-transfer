@@ -37,6 +37,5 @@ const testPermissions = async collections => {
 		}
 	}
 	createFiles(store);
-	console.log(getStoreAll());
 };
 module.exports = { testPermissions };
