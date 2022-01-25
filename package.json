@@ -33,9 +33,9 @@
 		"cli-table": "^0.3.11",
 		"cli-welcome": "^2.2.2",
 		"dree": "^3.3.3",
-		"execa": "^5.1.1",
 		"meow": "^9.0.0",
-		"ora": "^5.4.1"
+		"ora": "^5.4.1",
+		"shelljs": "^0.8.5"
 	},
 	"devDependencies": {
 		"prettier": "^2.5.1"
