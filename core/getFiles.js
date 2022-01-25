@@ -26,11 +26,10 @@ const listEndpoints = async dirPath => {
 	console.log(
 		`Found ${files.length} total collections
 
-✅ ${arr.length} collections we could access
+✅ Found ${arr.length} endpoints
 
-❌ ${failedColl.length} we where unable to access which was ${failedColl}`
+❌ ${failedColl.length} was not found`
 	);
-	console.log('\n');
 	return arr;
 };
 
