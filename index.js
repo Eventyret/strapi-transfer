@@ -23,6 +23,6 @@ const { clear, debug, report, retry } = flags;
 	input.includes(`help`) && cli.showHelp(0);
 	input.includes(`retry`) && whatToRetry();
 	retry && whatToRetry();
-	report && input.length === 0 && checkAPI();
+	!retry && input.length === 0 && checkAPI();
 	debug && log(flags);
 })();
