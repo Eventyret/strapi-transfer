@@ -10,21 +10,19 @@
 const init = require('./utils/init');
 const cli = require('./utils/cli');
 const log = require('./utils/log');
-const ask = require('./utils/ask');
-const { checkAPI } = require('./core/transfer');
-const { getStoreAll } = require('./core/store');
+const { whatToRetry } = require('./utils/ask');
+const { checkAPI } = require('./core/permissionTest');
 require('dotenv').config();
 
 const input = cli.input;
 const flags = cli.flags;
-const { clear, debug } = flags;
+const { clear, debug, report, retry } = flags;
 
 (async () => {
 	init({ clear });
 	input.includes(`help`) && cli.showHelp(0);
-	input.includes(`permissions`) && ask('noPermissions');
-	input.includes(`notfound`) && ask('notFound');
-	input.length === 0 && checkAPI();
+	input.includes(`retry`) && whatToRetry();
+	retry && whatToRetry();
+	report && input.length === 0 && checkAPI();
 	debug && log(flags);
-	debug && log(await getStoreAll());
 })();
