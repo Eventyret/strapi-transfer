@@ -19,6 +19,11 @@ const flags = {
 		alias: `d`,
 		desc: `Print debug info`
 	},
+	report: {
+		type: `boolean`,
+		alias: `p`,
+		desc: `Prints table with access`
+	},
 	version: {
 		type: `boolean`,
 		alias: `v`,
@@ -28,8 +33,7 @@ const flags = {
 
 const commands = {
 	help: { desc: `Print help info` },
-	permissions: { desc: `Retry endpoints with no Permissions` },
-	notfound: { desc: `Retry endpoints that wasnot found` }
+	retry: { desc: `Retry endpoints` }
 };
 
 const helpText = meowHelp({

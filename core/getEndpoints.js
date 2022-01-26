@@ -3,12 +3,13 @@ const path = require('path');
 const ora = require('ora');
 const alert = require('cli-alerts');
 
-const listEndpoints = async dirPath => {
+const getEndpointsFromProject = async dirPath => {
 	// dir path that contains all your json file
 	const spinner = ora('Getting endpoints from project').info();
 	const files = fs.readdirSync(dirPath);
 	const arr = [];
 	const failedColl = [];
+
 	files.forEach((val, i) => {
 		if (!fs.existsSync(path.join(dirPath, val, 'config/routes.json'))) {
 			spinner.fail(`Can't find endpoint for ${val}`);
@@ -33,4 +34,4 @@ const listEndpoints = async dirPath => {
 	return arr;
 };
 
-module.exports = { listEndpoints };
+module.exports = { getEndpointsFromProject };

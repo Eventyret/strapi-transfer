@@ -1,30 +1,29 @@
-const Configstore = require('configstore');
-
-// This needs an if check else it creates new ones all the time
-const config = new Configstore('strapiApiInfo', {
-	local: {
-		accessGranted: [],
-		notFound: [],
-		noPermissions: []
-	},
-	remote: {
-		accessGranted: [],
-		notFound: [],
-		noPermissions: []
-	}
+const os = require('os');
+const store = require('data-store')({
+	path: os.homedir() + '/.config/strapi-transfer/permissions.json'
 });
-
-const createFiles = async collection => {
-	config.set(collection);
+const STORE_LOOKUP = {
+	ACCESS_GRANTED: 'accessGranted',
+	NOT_FOUND: 'notFound',
+	NO_PERMISSIONS: 'noPermissions',
+	LOCAL: 'local',
+	REMOTE: 'remote'
 };
 
-const getStore = async key => {
-	return config.get(key);
+const setStore = async (data, location, key) => {
+	return await store.union(`${location}.${key}`, data);
 };
-const updateStore = async (key, store) => {
-	return config.set(config[key], store);
+const getSingleStore = async (location, key) => {
+	return await store.get(`${location}.${key}`);
 };
-const getStoreAll = async () => {
-	return await config.all;
+
+const getStore = async () => {
+	return await store.get();
 };
-module.exports = { createFiles, getStore, getStoreAll, updateStore };
+
+module.exports = {
+	setStore,
+	getSingleStore,
+	getStore,
+	STORE_LOOKUP
+};

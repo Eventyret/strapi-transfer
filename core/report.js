@@ -1,6 +1,7 @@
-const Table = require('cli-table');
+const Table = require('cli-table3');
+const { STORE_LOOKUP, getSingleStore } = require('./store');
 const table = new Table({
-	head: ['Collection', 'Status']
+	head: ['Collection', 'Status', 'Location']
 });
 
 const STATUS = {
@@ -10,14 +11,15 @@ const STATUS = {
 	500: '❌ Error'
 };
 
-const createTable = data => {
+const _createTable = data => {
 	table.push(data);
 };
-const printTable = () => {
+const printReport = () => {
 	console.log(table.toString());
 };
 
-const reportApi = async (collection, statusCode) => {
-	createTable([collection, STATUS[statusCode]]);
+// Needs work
+const createReport = async () => {
+	_createTable([await getSingleStore(), STATUS[statusCode], STORE_LOOKUP]);
 };
-module.exports = { reportApi, printTable, createTable };
+module.exports = { createReport, printReport };
