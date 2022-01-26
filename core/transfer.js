@@ -7,10 +7,16 @@ const checkAPI = async () => {
 	const collections = await listEndpoints(process.env.SOURCE_STRAPI_PATH);
 	alert({
 		type: `info`,
-		msg: `Testing Permissions`
+		msg: `Testing Permissions for ${process.env.SOURCE_STRAPI_URL}`
 	});
-	const createdCollections = await testPermissions(collections);
-	await createFiles(createdCollections);
+	const localhostPermissions = await testPermissions(collections);
+	await createFiles(localhostPermissions);
+	alert({
+		type: `info`,
+		msg: `Testing Permissions for ${process.env.TARGET_STRAPI_URL}`
+	});
+	const remotePermissions = await testPermissions(collections);
+	await createFiles(remotePermissions);
 };
 
 module.exports = { checkAPI };
