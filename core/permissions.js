@@ -1,6 +1,6 @@
 const axios = require('axios');
 const ora = require('ora');
-const { createFiles, getStoreAll, getStore } = require('./store.js');
+const { getStoreAll } = require('./store.js');
 const { reportApi } = require('./report.js');
 
 const testPermissions = async collections => {
@@ -8,7 +8,7 @@ const testPermissions = async collections => {
 	for await (const col of collections) {
 		const spinner = ora(`Trying ${col}`).start();
 		try {
-			await axios.get(`http://localhost:1337/${col}`);
+			await axios.get(`${process.env.SOURCE_STRAPI_URL}${col}`);
 			store.accessGranted.push(col);
 			spinner.succeed(`Access Granted for ${col}`);
 			reportApi(col, 200);
@@ -32,7 +32,6 @@ const testPermissions = async collections => {
 			}
 		}
 	}
-	console.log(store);
 	return store;
 };
 module.exports = { testPermissions };

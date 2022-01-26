@@ -13,6 +13,7 @@ const log = require('./utils/log');
 const ask = require('./utils/ask');
 const { checkAPI } = require('./core/transfer');
 const { getStoreAll } = require('./core/store');
+require('dotenv').config();
 
 const input = cli.input;
 const flags = cli.flags;

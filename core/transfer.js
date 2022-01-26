@@ -4,16 +4,13 @@ const alert = require('cli-alerts');
 const { createFiles } = require('./store');
 
 const checkAPI = async () => {
-	const collections = await listEndpoints(
-		`/Users/d7892891/Development/Challenger/strapi-application/api`
-	);
+	const collections = await listEndpoints(process.env.SOURCE_STRAPI_PATH);
 	alert({
 		type: `info`,
 		msg: `Testing Permissions`
 	});
-	const createdCollections = testPermissions(collections);
-	console.log(createdCollections);
-	createFiles(createdCollections);
+	const createdCollections = await testPermissions(collections);
+	await createFiles(createdCollections);
 };
 
 module.exports = { checkAPI };

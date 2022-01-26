@@ -3,7 +3,6 @@ const { getStore } = require('../core/store');
 const { retryAPI } = require('../core/retry');
 
 module.exports = async noPermissions => {
-	console.log(noPermissions);
 	const storedValues =
 		noPermissions === 'noPermissions'
 			? await getStore('noPermissions')

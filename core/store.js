@@ -1,4 +1,6 @@
 const Configstore = require('configstore');
+
+// This needs an if check else it creates new ones all the time
 const config = new Configstore('strapiApiInfo', {
 	accessGranted: [],
 	notFound: [],
